@@ -1,0 +1,5 @@
+SELECT pair, timestamp, size, buyExchange, sellExchange, pl 
+FROM `cryppro.orderbook_arb_dataset.orderbook_arb_results` s1
+WHERE timestamp = (SELECT MAX(timestamp) FROM `cryppro.orderbook_arb_dataset.orderbook_arb_results` s2 WHERE s1.pair = s2.pair)
+GROUP BY timestamp, pair, size, buyExchange, sellExchange, pl
+ORDER BY pair, timestamp, buyExchange, sellExchange
