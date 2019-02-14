@@ -1,0 +1,7 @@
+SELECT pair, size, buyExchange, sellExchange, MAX(pl)*100 as maxPL, MIN(pl)*100 AS minPL,
+APPROX_QUANTILES(pl, 100)[OFFSET(20)]*100 AS percentile20,
+APPROX_QUANTILES(pl, 100)[OFFSET(80)]*100 AS percentile80
+FROM `cryppro.orderbook_arb_dataset.orderbook_arb_results`
+WHERE timestamp >= TIMESTAMP_SUB(timestamp, INTERVAL 1 DAY)
+GROUP BY pair, size, buyExchange, sellExchange
+ORDER BY pair, size, buyExchange, sellExchange
